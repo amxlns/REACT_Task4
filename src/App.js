@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import Table from './components/Table';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const API = "https://dummyjson.com/users"
+  const [user , setuser] = useState([]);
+  const fetchuser = async (url)=>{
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.users);
+    setuser(data.users)
+  }
+
+  useEffect(()=>{
+    fetchuser(API);
+  } , [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+     <div className="container">
+     <h2 style={{textAlign:"center"}}>Dummy Data</h2>
+     </div>
+    <div className="container my-3">
+        
+        <Table user={user}/>
     </div>
+    </>
+
+    
   );
 }
 
